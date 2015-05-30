@@ -1,0 +1,110 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.7
+version = '0.2.3-SNAPSHOT'
+
+group = 'net.riccardocossu.i18split'
+project.archivesBaseName='i18split-export'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
+
+def defaultEncoding = 'UTF-8'
+compileGroovy {
+	groovyOptions.encoding = defaultEncoding
+}
+compileTestGroovy {
+	groovyOptions.encoding = defaultEncoding
+}
+
+
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'i18split export', 'Implementation-Version': version
+	}
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile ('net.riccardocossu.i18split:i18split-base:0.2.3') {
+		exclude module: 'opencsv'
+	}
+	compile 'org.jopendocument:jOpenDocument:1.3'
+	compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+	testCompile 'au.com.bytecode:opencsv:2.4'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+artifacts {
+	archives jar
+
+	archives javadocJar
+	archives sourcesJar
+}
+
+signing {
+	required { isReleaseVersion }
+	sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+	   mavenDeployer {
+		   beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+		   repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+			 authentication(userName: sonatypeUsername, password: sonatypePassword)
+		   }
+
+		   pom.project {
+			  name 'i18split-export'
+			  packaging 'jar'
+			  description 'i18split-export is a plugin for i18split which contains reader and writer for the Open Document Spreadsheet (Calc) and Microsoft Excel formats'
+			  url 'https://github.com/riccardocossu/i18split'
+
+			  scm {
+				  url 'scm:git@github.com:riccardocossu/i18split.git'
+				  connection 'scm:git@github.com:riccardocossu/i18split.git'
+				  developerConnection 'git@github.com:riccardocossu/i18split.git'
+			  }
+
+			  licenses {
+				  license {
+					  name 'GNU GENERAL PUBLIC LICENSE Version 3 '
+					  url 'http://www.gnu.org/licenses/gpl.txt'
+					  distribution 'repo'
+				  }
+			  }
+
+			  developers {
+				  developer {
+					  id 'riccardocossu'
+					  name 'Riccardo Cossu'
+				  }
+			  }
+		  }
+	   }
+    }
+}
