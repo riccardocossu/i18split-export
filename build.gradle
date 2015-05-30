@@ -11,6 +11,14 @@ project.archivesBaseName='i18split-export'
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
+if (!project.hasProperty("sonatypeUsername")) {
+	ext.sonatypeUsername = "none"
+}
+
+if (!project.hasProperty("sonatypePassword")) {
+	ext.sonatypePassword = "none"
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
 }
