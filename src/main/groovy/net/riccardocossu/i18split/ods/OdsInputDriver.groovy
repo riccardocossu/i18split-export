@@ -15,8 +15,6 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet
  */
 class OdsInputDriver implements InputDriver {
 
-	private static final String FILE_NAME = "i18split.input.ods.fileName"
-
 	private static final String SHORT_NAME = "ods.input"
 	private String fileName
 	private File baseDir
@@ -44,8 +42,11 @@ class OdsInputDriver implements InputDriver {
 
     @Override
     String[] init(Configuration configuration) {
-        fileName = configuration.getString(FILE_NAME)
+        fileName = configuration.getString(ConfigKeys.INPUT_FILE)
         baseDir = new File(configuration.getString(ConfigKeys.INPUT_BASE_PATH))
+		if(!fileName) {
+			throw new NullPointerException('Filename cannot be null')
+		}
 		File input = new File (baseDir,fileName)
 		final Sheet sheet = SpreadSheet.createFromFile(input).getSheet(0)
 		int rowCount = sheet.getRowCount()

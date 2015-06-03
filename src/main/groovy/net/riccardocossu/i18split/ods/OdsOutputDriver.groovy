@@ -11,7 +11,6 @@ import org.apache.commons.configuration.Configuration
 import org.jopendocument.dom.spreadsheet.SpreadSheet
 
 public class OdsOutputDriver implements OutputDriver {
-	private static final String FILE_NAME = "i18split.output.ods.fileName"
 	private String[] keys
 	private static final String SHORT_NAME = "ods.output"
 	private List<Object[]> lines = []
@@ -20,7 +19,11 @@ public class OdsOutputDriver implements OutputDriver {
 	@Override
 	public String[] init(Configuration configuration) {
 		keys = configuration.getStringArray(ConfigKeys.INPUT_KEYS)
-		fileOut = new File("${configuration.getString(ConfigKeys.OUTPUT_BASE_PATH)}".toString(),"${configuration.getString(FILE_NAME)}".toString())
+		def fileName = configuration.getString(ConfigKeys.OUTPUT_FILE)
+		if(!fileName) {
+			throw new NullPointerException('Filename cannot be null')
+		}
+		fileOut = new File("${configuration.getString(ConfigKeys.OUTPUT_BASE_PATH)}".toString(),fileName)
 		header = new String[keys.length]+1
 		header[0] = 'KEY'
 		int i = 1

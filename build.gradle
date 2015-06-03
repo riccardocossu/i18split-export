@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 sourceCompatibility = 1.7
-version = '0.2.3-SNAPSHOT'
+version = '1.0.0-RC1'
 
 group = 'net.riccardocossu.i18split'
 project.archivesBaseName='i18split-export'
@@ -39,11 +39,12 @@ jar {
 }
 
 repositories {
+	mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    compile ('net.riccardocossu.i18split:i18split-base:0.2.3') {
+    compile ("net.riccardocossu.i18split:i18split-base:${version}") {
 		exclude module: 'opencsv'
 	}
 	compile 'org.jopendocument:jOpenDocument:1.3'

@@ -16,8 +16,6 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet
  */
 class XlsInputDriver implements InputDriver {
 
-	private static final String FILE_NAME = "i18split.input.xls.fileName"
-
 	private static final String SHORT_NAME = "xls.input"
 	private String fileName
 	private File baseDir
@@ -45,7 +43,10 @@ class XlsInputDriver implements InputDriver {
 
     @Override
     String[] init(Configuration configuration) {
-        fileName = configuration.getString(FILE_NAME)
+        fileName = configuration.getString(ConfigKeys.INPUT_FILE)
+		if(!fileName) {
+			throw new NullPointerException('Filename cannot be null')
+		}
         baseDir = new File(configuration.getString(ConfigKeys.INPUT_BASE_PATH))
 		File input = new File (baseDir,fileName)
 		final Workbook workbook = Workbook.getWorkbook(input)
