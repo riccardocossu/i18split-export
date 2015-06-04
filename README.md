@@ -76,7 +76,7 @@ And one for import from ODS/XLS:
 						</goals>
 						<configuration>
 							<outputPlugin>csv.output</outputPlugin>
-							<intputPlugin>ods.input</inputPlugin> <!-- use xls.input for XLS -->
+							<inputPlugin>ods.input</inputPlugin> <!-- use xls.input for XLS -->
 							<pluginsConfig>
 								<i18split.input.file>messages.ods</i18split.input.file> <!-- change file extension to xls to use xls -->
 								<i18split.output.file>messages.csv</i18split.output.file>
