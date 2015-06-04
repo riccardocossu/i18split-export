@@ -8,7 +8,7 @@ This is a collection of plugin for i18split to let developer export and import t
 
 ## Why export at all?
 
-We still think CSV is a very handy format for i18n files: it's text based, so it's easily versionable, mergeable and so on. In a word it is very **developer friendly**.
+We still think CSV is a very handy format for i18n files: it's text based, so it's easily versionable, mergeable and so on. In a word it is very **developer friendly**. So CSV will probably be the preferred source format, but why don't we add an export/import function? It will be called only when needed, under the accurate supervision by a developer (please see the note at the end for an example to make it work).
 
 But, what if you need to share the file with someone who is not a developer, but, for example, a translation expert or agency; they won't love CSV as you do, that's a fact, they would probably prefer a more user friendly format like XLS or ODS!
 
@@ -92,3 +92,13 @@ And one for import from ODS/XLS:
 
 
 ```
+
+## A note about maven
+
+For some strange reason, although the execution tag needed an unique id since ever, that prior to maven 3.3 the was no way of directly calling a specific execution defined in the pom, without adding a phase in the pom declaration or introducing a specific profile.
+In maven 3.3 you can call the export/import execution anytime, with a command like this:
+
+```
+mvn i18split:convert@export
+```
+where **export** is the id of the execution.
