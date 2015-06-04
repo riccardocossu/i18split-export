@@ -95,7 +95,7 @@ And one for import from ODS/XLS:
 
 ## A note about maven
 
-For some strange reason, although the execution tag needed an unique id since ever, that prior to maven 3.3 the was no way of directly calling a specific execution defined in the pom, without adding a phase in the pom declaration or introducing a specific profile.
+For some strange reason, although the execution tag needed an unique id since ever, prior to maven 3.3 there was no way of directly calling a specific execution defined in the pom, without adding a phase in the pom declaration or introducing a specific profile.
 In maven 3.3 you can call the export/import execution anytime, with a command like this:
 
 ```
