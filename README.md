@@ -3,7 +3,7 @@
 ![](https://codeship.com/projects/944d1370-e8eb-0132-94e8-1298b11bde3f/status?branch=master)
 
 # i18split-export
-This is a collection of plugin for i18split to let developer export and import their files to/into spreadsheet files (xls, ods ...) and maybe other formats in the future.
+This is a collection of plugin for [i18split](https://github.com/riccardocossu/i18split) to let developer export and import their files to/into spreadsheet files (xls, ods ...) and maybe other formats in the future.
 
 
 ## Why export at all?
